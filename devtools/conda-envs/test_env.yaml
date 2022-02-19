@@ -1,0 +1,15 @@
+channels:
+- uibcdf/label/dev
+- uibcdf
+- conda-forge
+- defaults
+dependencies:
+- python
+- setuptools
+- numpy
+- pyunitwizard
+- molsysmt
+- pytest
+- pip
+- pytest-cov
+- codecov

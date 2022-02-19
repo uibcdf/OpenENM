@@ -1,0 +1,27 @@
+package:
+  name: opengnm
+  version: "{{ environ['GIT_DESCRIBE_TAG'] }}"
+source:
+  path: ../../
+build:
+  number: 1
+requirements:
+  build:
+  - python
+  - setuptools
+  - numpy
+  run:
+  - python
+  - setuptools
+  - numpy
+  - pyunitwizard
+  - molsysmt
+about:
+  home: https://uibcdf.org
+  license: MIT License
+  summary: ''
+  description: 'This library provides some useful methods and classes to...
+
+    '
+  dev_url: https://github.com/uibcdf/OpenGNM
+  doc_url: https://uibcdf.org/OpenGNM

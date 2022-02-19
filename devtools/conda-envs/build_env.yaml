@@ -1,0 +1,11 @@
+channels:
+- uibcdf/label/dev
+- uibcdf
+- conda-forge
+- defaults
+dependencies:
+- python
+- setuptools
+- numpy
+- anaconda-client
+- conda-build
