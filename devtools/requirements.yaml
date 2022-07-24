@@ -1,0 +1,52 @@
+setup:
+  channels: &setup_channels
+    - uibcdf
+    - conda-forge
+    - defaults
+  dependencies: &setup_dependencies
+    - python
+    - setuptools
+    - numpy
+
+production:
+  channels: &production_channels
+    - *setup_channels
+  dependencies: &production_dependencies
+    - *setup_dependencies
+
+test:
+  channels: &test_channels
+    - *production_channels
+  dependencies: &test_dependencies
+    - *production_dependencies
+    - pytest
+    - pip
+    - pytest-cov
+    - codecov
+
+docs:
+  channels: &docs_channels
+    - *production_channels
+  dependencies: &docs_dependencies
+    - *production_dependencies
+    - sphinx
+    - sphinx_rtd_theme
+    - sphinxcontrib-bibtex
+    - myst-nb
+
+development:
+  channels:
+    - *production_channels
+  dependencies:
+    - *production_dependencies
+    - *test_dependencies
+    - *docs_dependencies
+    - jupyterlab
+
+conda-build:
+  channels:
+    - *production_channels
+  dependencies:
+    - anaconda-client
+    - conda-build
+
