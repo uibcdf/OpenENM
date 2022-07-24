@@ -1,8 +1,11 @@
 channels:
 - uibcdf
+- uibcdf/label/dev
 - conda-forge
 - defaults
 dependencies:
 - python
 - setuptools
 - numpy
+- molsysmt
+- pyunitwizard
