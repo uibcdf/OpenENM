@@ -1,6 +1,7 @@
 setup:
   channels: &setup_channels
     - uibcdf
+    - uibcdf/label/dev
     - conda-forge
     - defaults
   dependencies: &setup_dependencies
@@ -13,6 +14,8 @@ production:
     - *setup_channels
   dependencies: &production_dependencies
     - *setup_dependencies
+    - molsysmt
+    - pyunitwizard
 
 test:
   channels: &test_channels

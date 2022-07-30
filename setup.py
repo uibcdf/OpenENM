@@ -1,5 +1,5 @@
 """
-OpenGNM.
+OpenENM.
 Python library to work with Gaussian Network Models.
 """
 import sys
@@ -20,12 +20,12 @@ except:
 
 
 setup(
-    name='opengnm',
+    name='openenm',
     author='UIBCDF Lab',
     author_email='uibcdf@gmail.com',
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
-    package_dir={'opengnm': 'opengnm'},
+    package_dir={'openenm': 'openenm'},
     packages=find_packages(),
     include_package_data=False,
     package_data={},
@@ -38,7 +38,7 @@ setup(
     ],
     python_requires=">=3.7",
     url='http://uibcdf.org',
-    download_url ='https://github.com/uibcdf/OpenGNM',
+    download_url ='https://github.com/uibcdf/OpenENM',
     license='MIT',
     description=short_description[0],
     long_description=long_description,

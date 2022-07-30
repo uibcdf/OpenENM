@@ -1,5 +1,6 @@
 channels:
 - uibcdf
+- uibcdf/label/dev
 - conda-forge
 - defaults
 dependencies:

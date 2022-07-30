@@ -1,11 +1,14 @@
 channels:
 - uibcdf
+- uibcdf/label/dev
 - conda-forge
 - defaults
 dependencies:
 - python
 - setuptools
 - numpy
+- molsysmt
+- pyunitwizard
 - sphinx
 - sphinx_rtd_theme
 - sphinxcontrib-bibtex

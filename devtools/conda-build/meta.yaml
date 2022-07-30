@@ -14,6 +14,8 @@ requirements:
   - python
   - setuptools
   - numpy
+  - molsysmt
+  - pyunitwizard
 about:
   home: https://uibcdf.org
   license: MIT License
