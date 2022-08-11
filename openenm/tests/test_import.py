@@ -1,13 +1,12 @@
 """
-Unit and regression test for the opengnm package.
+Unit and regression test for the openenm package.
 """
 
 # Import package, test suite, and other packages as needed
-import opengnm
-import pytest
+import openenm
 import sys
 
-def test_opengnm_imported():
+def test_openenm_imported():
     """Sample test, will always pass so long as import statement worked"""
-    assert "opengnm" in sys.modules
+    assert "openenm" in sys.modules
 

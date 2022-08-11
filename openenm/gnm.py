@@ -1,4 +1,4 @@
-from .enm import ENM
+from .enm imprt ENM
 import molsysmt as msm
 from openenm import puw
 import numpy as np
