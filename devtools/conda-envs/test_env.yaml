@@ -9,6 +9,7 @@ dependencies:
 - numpy
 - molsysmt
 - pyunitwizard
+- matplotlib
 - pytest
 - pip
 - pytest-cov
