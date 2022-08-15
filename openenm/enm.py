@@ -6,13 +6,13 @@ from matplotlib import pyplot as plt
 class ENM():
 
     def __init__(self, molecular_system, selection='atom_name=="CA"', structure_index=0, cutoff='12 angstroms',
-                 syntaxis='MolSysMT'):
+                 syntax='MolSysMT'):
 
         self.molecular_system = msm.convert(molecular_system, to_form="molsysmt.MolSys",
                                             structure_indices=structure_index)
 
         self.atom_indices = msm.select(self.molecular_system, selection=selection,
-                                       syntaxis=syntaxis)
+                                       syntax=syntax)
 
         self.cutoff = puw.standardize(cutoff)
 

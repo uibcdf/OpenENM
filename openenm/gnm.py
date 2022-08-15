@@ -1,4 +1,4 @@
-from .enm imprt ENM
+from .enm import ENM
 import molsysmt as msm
 from openenm import puw
 import numpy as np
@@ -8,7 +8,7 @@ from matplotlib.colors import LinearSegmentedColormap
 class GNM(ENM):
 
     def __init__(self, molecular_system, selection='atom_name=="CA"', structure_index=0, cutoff='12 angstroms',
-                 syntaxis='MolSysMT'):
+                 syntax='MolSysMT'):
 
         super().__init__(molecular_system, selection=selection, structure_index=structure_index, cutoff=cutoff)
 
