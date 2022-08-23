@@ -1,10 +1,21 @@
 # Configure PyUnitWizard
 
-import pyunitwizard as puw
+import pyunitwizard
 
-puw.configure.set_default_form('pint')
-puw.configure.set_default_parser('pint')
-puw.configure.set_standard_units(['nm', 'ps', 'K', 'mole', 'amu', 'e',
-                                 'kJ/mol', 'kJ/(mol*nm**2)', 'N', 'degrees'])
+standards = [
+    'nm',      # length: nanometer
+    'ps',      # time: picosecond
+    'K',       # temperature: kelvin
+    'mole',    # amount: mole
+    'amu',     # mass: atomic mass unit
+    'e',       # charge: elementary charge
+    'kJ/mol',  # energy: kilojoules/mole
+    'N',       # force: newton
+    'degrees'  # angles: degree
+]
+
+pyunitwizard.configure.set_default_form('pint')
+pyunitwizard.configure.set_default_parser('pint')
+pyunitwizard.configure.set_standard_units(standards)
 
 
