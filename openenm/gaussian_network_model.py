@@ -1,73 +1,111 @@
-from .elastic_network_model import ElasticNetworkModel
 import molsysmt as msm
 from openenm import pyunitwizard as puw
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 from tqdm import tqdm
+from copy import deepcopy
+from sklearn.linear_model import LinearRegression
 
-class GaussianNetworkModel(ElasticNetworkModel):
+class GaussianNetworkModel():
 
     def __init__(self, molecular_system, selection='atom_name=="CA"', structure_index=0, cutoff='12 angstroms',
                  syntax='MolSysMT'):
 
-        super().__init__(molecular_system, selection=selection, structure_index=structure_index, cutoff=cutoff)
+        self.molecular_system = msm.convert(molecular_system, to_form="molsysmt.MolSys", structure_indices=structure_index)
 
+        self.atom_indices = None
+        self.n_nodes = 0
+        self.cutoff = None
+        self.contacts = None
         self.kirchhoff_matrix = None
         self.eigenvalues = None
         self.eigenvectors = None    # modes
         self.frequencies = None
         self.b_factors = None
+        self.b_factors_exp = None
         self.scaling_factor = None
         self.sqrt_deviation = None
         self.correlation_matrix = None
         self.inverse = None
 
-        if self.contacts is not None:
-            self.rebuild()
+        self.make_model(selection=selection, cutoff=cutoff, syntax=syntax)
 
-    def rebuild(self):
+    def make_model(self, selection='atom_name=="CA"', cutoff='12 angstroms', syntax='MolSysMT'):
+
+        if selection is not None:
+            self.atom_indices = msm.select(self.molecular_system, selection=selection, syntax=syntax)
+
+        if cutoff is not None:
+            self.cutoff = puw.standardize(cutoff)
+
+        # contacts
+
+        contacts = msm.structure.get_contacts(self.molecular_system,
+                                              selection=self.atom_indices,
+                                              structure_indices=0,
+                                              threshold=self.cutoff)
+
+        self.contacts = contacts[0]
+
+        self.n_nodes = self.contacts.shape[0]
+
+        np.fill_diagonal(self.contacts, False)
+
+        # Kirchhoff matrix: eigenvals, eigenvects
 
         self.kirchhoff_matrix = -self.contacts.astype(int)
         np.fill_diagonal(self.kirchhoff_matrix, self.contacts.sum(axis=1))
 
         self.eigenvalues, self.eigenvectors = np.linalg.eigh(self.kirchhoff_matrix)
 
+        # Frequencies
+
         self.frequencies = np.sqrt(np.absolute(self.eigenvalues))
 
-        # scipy.linalg.pinvh would work also
+        # B-factors and diagonal
+
+        self.b_factors_exp = msm.get(self.molecular_system, element='atom', selection=self.atom_indices, b_factor=True)
+
+           ### scipy.linalg.pinvh would work also
         diag = np.diag(1.0/self.eigenvalues)
         diag[0,0] = 0.0
         self.inverse = self.eigenvectors @ diag @ self.eigenvectors.T
-        # Test: np.allclose(a, a @ inv @ a)
 
-        self.b_factors = self.inverse.diagonal()
-
-        self.correlation_matrix = self.inverse / np.sqrt(np.einsum('ii,jj->ij', self.inverse, self.inverse))
-
-        self.fitt_b_factors()
-
-    def fitt_b_factors(self):
+        b_factors_unfitted = self.inverse.diagonal()
 
         aa=0.0
         bb=0.0
 
         for ii in range(self.n_nodes):
-            aa+=self.b_factors_exp[ii]*self.b_factors[ii]
-            bb+=self.b_factors[ii]*self.b_factors[ii]
+            aa+=self.b_factors_exp[ii]*b_factors_unfitted[ii]
+            bb+=b_factors_unfitted[ii]*b_factors_unfitted[ii]
 
-        aa=aa/bb
+        self.scaling_factor = aa/bb
 
-        bb=0.0
+        self.b_factors = self.scaling_factor * b_factors_unfitted
+
+        dev=0.0
         for ii in range(self.n_nodes):
-            bb+=(self.b_factors_exp[ii]-aa*self.b_factors[ii])**2
+            dev+=(self.b_factors_exp[ii]-self.b_factors[ii])**2
         
-        self.scaling_factor = aa
-        self.sqrt_deviation = bb
+        self.sqrt_deviation = dev
 
-    def show_best_cutoff(self):
+        # Correlation Matrix
 
-        from copy import deepcopy
+        self.correlation_matrix = self.inverse / np.sqrt(np.einsum('ii,jj->ij', self.inverse, self.inverse))
+
+    def show_contact_map(self):
+
+        plt.matshow(self.contacts, cmap='binary')
+        return plt.show()
+
+    def show_best_cutoff(self, minimum='6.0 angstroms', maximum='13.0 angstroms', step='0.1 angstroms'):
+
+        minimum_value = puw.get_value(minimum, standardized=True)
+        maximum_value = puw.get_value(maximum, standardized=True)
+        step_value = puw.get_value(step, standardized=True)
+        length_unit = puw.get_standard_units(dimensionality={'[L]':1})
 
         backup_cutoff = deepcopy(self.cutoff)
 
@@ -75,15 +113,13 @@ class GaussianNetworkModel(ElasticNetworkModel):
         r_2=[]
         l=1.0*self.n_nodes
 
-        for ii in tqdm(np.arange(6.0,13.0,0.1)):
-            cutoff = puw.quantity(ii, 'angstroms')
+        for ii in tqdm(np.arange(minimum_value, maximum_value, step_value)):
+            cutoff = puw.quantity(ii, length_unit)
             ctoff.append(cutoff)
-            self.calculate_contacts(cutoff)
-            self.rebuild()
+            self.make_model(cutoff=cutoff)
             r_2.append((self.sqrt_deviation)/l)
 
-        self.calculate_contacts(backup_cutoff)
-        self.rebuild()
+        self.make_model(cutoff=backup_cutoff)
 
         unit = puw.get_unit(ctoff[0])
         ctoff = np.array([puw.get_value(ii) for ii in ctoff])
@@ -104,13 +140,25 @@ class GaussianNetworkModel(ElasticNetworkModel):
     def show_b_factors(self):
 
         plt.plot(self.b_factors_exp, color="blue")
-        plt.plot(self.scaling_factor*self.b_factors, color="red")
+        plt.plot(self.b_factors, color="red")
         return plt.show()
 
-    def show_dispersion_b_factors(self):
+    def show_b_factors_dispersion(self):
 
-        plt.plot(self.b_factors,self.b_factors_exp,'yo')
-        plt.plot(self.b_factors,self.scaling_factor*self.b_factors,'r--')
+        x = self.b_factors
+        y = self.b_factors_exp
+
+        plt.plot(x, y, 'yo')
+        reg = LinearRegression().fit(x.reshape((-1,1)),y)
+        b = reg.intercept_
+        m = reg.coef_[0]
+        plt.axline(xy1=(0, b), slope=m, label=f'$y = {m:.1f}x {b:+.1f}$', ls='--', color='r')
+
+        plt.axis('square')
+        plt.xlim(left=0)
+        plt.ylim(bottom=0)
+        plt.legend()
+
         return plt.show()
 
     def show_inverse(self):
@@ -152,6 +200,23 @@ class GaussianNetworkModel(ElasticNetworkModel):
         plt.colorbar()
 
         return plt.show()
+
+    def view_model(self, protein=True):
+
+        output = msm.view(self.molecular_system)
+
+        if not protein:
+            output.clear_representations()
+
+        coordinates = msm.get(self.molecular_system, element='atom', selection=self.atom_indices, coordinates=True)
+        coordinates = puw.get_value(coordinates[0], to_unit='angstroms')
+
+        for ii in tqdm(range(self.n_nodes)):
+            for jj in range(ii+1, self.n_nodes):
+                if self.contacts[ii,jj]:
+                    output.shape.add_cylinder(coordinates[ii], coordinates[jj], [0.6, 0.6, 0.6], 0.2)
+
+        return output
 
     def write(self):
 

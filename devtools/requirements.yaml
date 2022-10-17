@@ -16,6 +16,8 @@ production:
     - molsysmt
     - pyunitwizard
     - matplotlib
+    - tqdm
+    - scikit-learn
 
 test:
   channels: &test_channels
