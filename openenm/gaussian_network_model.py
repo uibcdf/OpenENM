@@ -6,6 +6,7 @@ from matplotlib.colors import LinearSegmentedColormap
 from tqdm import tqdm
 from copy import deepcopy
 from sklearn.linear_model import LinearRegression
+import nglview as nv
 
 class GaussianNetworkModel():
 
@@ -201,21 +202,42 @@ class GaussianNetworkModel():
 
         return plt.show()
 
-    def view_model(self, protein=True):
+    def view(self, protein=True, network=True, color_mode=None):
 
-        output = msm.view(self.molecular_system)
+        if protein:
+            output = msm.view(self.molecular_system)
+        else:
+            output = nv.NGLWidget()
 
-        if not protein:
-            output.clear_representations()
+        if network:
 
-        coordinates = msm.get(self.molecular_system, element='atom', selection=self.atom_indices, coordinates=True)
-        coordinates = puw.get_value(coordinates[0], to_unit='angstroms')
+            coordinates = msm.get(self.molecular_system, element='atom', selection=self.atom_indices, coordinates=True)
+            coordinates = puw.get_value(coordinates[0], to_unit='angstroms')
 
-        #for ii in tqdm(range(self.n_nodes)):
-        for ii in tqdm(range(200)):
-            for jj in range(ii+1, self.n_nodes):
-                if self.contacts[ii,jj]:
-                    output.shape.add_cylinder(coordinates[ii], coordinates[jj], [0.6, 0.6, 0.6], 0.2)
+            for ii in range(self.n_nodes):
+                for jj in range(ii+1, self.n_nodes):
+                    if self.contacts[ii,jj]:
+
+                        kwargs = {'position1':coordinates[ii],
+                                  'position2':coordinates[jj],
+                                  'color': [0.6, 0.6, 0.6],
+                                  'radius': [0.2]}
+                        
+                        msg = output._get_remote_call_msg("addBuffer",
+                                            target="Widget",
+                                            args=["cylinder"],
+                                            kwargs=kwargs,
+                                            fire_embed=True)
+
+                        def callback(widget, msg=msg):
+                            widget.send(msg)
+
+                        callback._method_name = 'addBuffer'
+                        callback._ngl_msg = msg
+
+                        output._ngl_displayed_callbacks_before_loaded.append(callback)
+
+                        output._ngl_msg_archive.append(msg)
 
         return output
 
