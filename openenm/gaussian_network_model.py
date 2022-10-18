@@ -211,7 +211,8 @@ class GaussianNetworkModel():
         coordinates = msm.get(self.molecular_system, element='atom', selection=self.atom_indices, coordinates=True)
         coordinates = puw.get_value(coordinates[0], to_unit='angstroms')
 
-        for ii in tqdm(range(self.n_nodes)):
+        #for ii in tqdm(range(self.n_nodes)):
+        for ii in tqdm(range(200)):
             for jj in range(ii+1, self.n_nodes):
                 if self.contacts[ii,jj]:
                     output.shape.add_cylinder(coordinates[ii], coordinates[jj], [0.6, 0.6, 0.6], 0.2)
