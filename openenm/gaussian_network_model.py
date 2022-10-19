@@ -202,7 +202,7 @@ class GaussianNetworkModel():
 
         return plt.show()
 
-    def view(self, protein=True, network=True, color_mode=None):
+    def view(self, protein=True, network=False, color_by=None, mode=None):
 
         if protein:
             output = msm.view(self.molecular_system)
