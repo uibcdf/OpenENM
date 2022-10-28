@@ -9,7 +9,7 @@ from sklearn.linear_model import LinearRegression
 import nglview as nv
 
 
-class AnisotropicNetworkModel(ElasticNetworkModel):
+class AnisotropicNetworkModel():
 
     def __init__(self, molecular_system, selection='atom_name=="CA"', structure_index=0, cutoff='9 angstroms', stiffness=None,
                  syntax='MolSysMT'):
@@ -34,6 +34,8 @@ class AnisotropicNetworkModel(ElasticNetworkModel):
         self.inverse = None
 
         self.make_model(selection=selection, cutoff=cutoff, syntax=syntax)
+
+    def make_model(self, selection='atom_name=="CA"', cutoff='9 angstroms', syntax='MolSysMT'):
 
         if selection is not None:
             self.atom_indices = msm.select(self.molecular_system, selection=selection, syntax=syntax)
@@ -73,7 +75,7 @@ class AnisotropicNetworkModel(ElasticNetworkModel):
                     for kk in range(3):
                         for gg in range(3):
 
-                            val_aux = -(coordinates[jj][kk]-coordinates[ii][kk])*(coordiantes[jj][gg]-coordinates[ii][gg])/distance2
+                            val_aux = -(coordinates[jj][kk]-coordinates[ii][kk])*(coordinates[jj][gg]-coordinates[ii][gg])/distance2
 
                             ## Sub matrix Hij
                             self.hessian_matrix[iii+kk, jjj+gg]=val_aux
@@ -95,14 +97,19 @@ class AnisotropicNetworkModel(ElasticNetworkModel):
             for ii in range(self.n_nodes):
                 iii=ii*3
                 for jj in range(3):
-                    self.modes[aa,ii,jj]=self.eigenvects[aa,iii+jj]
+                    self.modes[aa,ii,jj]=self.eigenvectors[aa,iii+jj]
 
     def show_contact_map(self):
 
         plt.matshow(self.contacts, cmap='binary')
         return plt.show()
 
-    def structures_from_harmonic_oscilation_around_mode(amplitude=8.0, steps=60, bonds_constrained=False):
+    def structures_from_harmonic_oscilation_around_mode(self, mode=1, amplitude=8.0, steps=60, method='interpolation'):
 
+        # method in ['linear interpolation', 'physical exploration']
 
+        if method=='linear interpolation':
+
+            pass
+        pass
 
