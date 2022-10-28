@@ -10,7 +10,7 @@ import nglview as nv
 
 class GaussianNetworkModel():
 
-    def __init__(self, molecular_system, selection='atom_name=="CA"', structure_index=0, cutoff='12 angstroms',
+    def __init__(self, molecular_system, selection='atom_name=="CA"', structure_index=0, cutoff='9 angstroms',
                  syntax='MolSysMT'):
 
         self.molecular_system = msm.convert(molecular_system, to_form="molsysmt.MolSys", structure_indices=structure_index)
@@ -21,8 +21,9 @@ class GaussianNetworkModel():
         self.contacts = None
         self.kirchhoff_matrix = None
         self.eigenvalues = None
-        self.eigenvectors = None    # modes
+        self.eigenvectors = None
         self.frequencies = None
+        self.modes = None
         self.b_factors = None
         self.b_factors_exp = None
         self.scaling_factor = None
@@ -60,9 +61,11 @@ class GaussianNetworkModel():
 
         self.eigenvalues, self.eigenvectors = np.linalg.eigh(self.kirchhoff_matrix)
 
-        # Frequencies
+        # Frequencies and modes
 
         self.frequencies = np.sqrt(np.absolute(self.eigenvalues))
+
+        self.modes = np.transpose(self.eigenvectors)
 
         # B-factors and diagonal
 
@@ -202,10 +205,18 @@ class GaussianNetworkModel():
 
         return plt.show()
 
-    def view(self, protein=True, network=False, color_by=None, mode=None):
+    def view(self, protein=True, network=False, color_by_value=None, representation='cartoon', cmap='bwr'):
 
         if protein:
             output = msm.view(self.molecular_system)
+
+
+            if color_by_value is not None:
+
+                output.clear()
+
+                msm.thirds.nglview.color_by_value(output, color_by_value, element='group', representation=representation, cmap=cmap)
+
         else:
             output = nv.NGLWidget()
 
@@ -218,8 +229,8 @@ class GaussianNetworkModel():
                 for jj in range(ii+1, self.n_nodes):
                     if self.contacts[ii,jj]:
 
-                        kwargs = {'position1':coordinates[ii],
-                                  'position2':coordinates[jj],
+                        kwargs = {'position1':coordinates[ii].tolist(),
+                                  'position2':coordinates[jj].tolist(),
                                   'color': [0.6, 0.6, 0.6],
                                   'radius': [0.2]}
                         
@@ -238,8 +249,20 @@ class GaussianNetworkModel():
                         output._ngl_displayed_callbacks_before_loaded.append(callback)
 
                         output._ngl_msg_archive.append(msg)
+        
 
         return output
+
+    def view_mode(self, mode=1, representation='cartoon', cmap='bwr'):
+
+        output = msm.view(self.molecular_system)
+
+        output.clear()
+
+        msm.thirds.nglview.color_by_value(output, self.modes[mode], element='group', representation=representation, cmap=cmap)
+
+        return output
+
 
     def write(self):
 
