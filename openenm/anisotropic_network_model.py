@@ -7,6 +7,7 @@ from tqdm import tqdm
 from copy import deepcopy
 from sklearn.linear_model import LinearRegression
 import nglview as nv
+import lindelint as ldl
 
 
 class AnisotropicNetworkModel():
@@ -97,19 +98,61 @@ class AnisotropicNetworkModel():
             for ii in range(self.n_nodes):
                 iii=ii*3
                 for jj in range(3):
-                    self.modes[aa,ii,jj]=self.eigenvectors[aa,iii+jj]
+                    self.modes[aa,ii,jj]=self.eigenvectors[iii+jj,aa]
 
     def show_contact_map(self):
 
         plt.matshow(self.contacts, cmap='binary')
         return plt.show()
 
-    def structures_from_harmonic_oscilation_around_mode(self, mode=1, amplitude=8.0, steps=60, method='interpolation'):
+    def view_mode(self, mode=1, amplitude='3.0 angstroms', steps=60, method='LinDelInt', representation='cartoon', arrows=False,
+            color_arrows='#808080', radius_arrows='0.2 angstroms'):
 
-        # method in ['linear interpolation', 'physical exploration']
+        if steps>0:
 
-        if method=='linear interpolation':
+            molecular_system = self.trajectory_along_mode(mode=mode, amplitude=amplitude, steps=steps, method=method)
+            view = msm.view(molecular_system)
+
+        else:
+
+            view = msm.view(self.molecular_system)
+
+        if arrows:
+
+            coordinates = msm.get(self.molecular_system, element='atom', selection=self.atom_indices, coordinates=True)
+            arrows = puw.quantity(100.0*self.mode[mode], 'angstroms')
+            msm.thirds.nglview.add_arrows(view, coordinates, arrows, color=color_arrows, radius=radius_arrows)
+
+        return view
+
+
+    def trajectory_along_mode(self, selection='all', mode=1, amplitude='3.0 angstroms', steps=60, method='LinDelInt',
+            syntax='MolSysMT', output_form='molsysmt.MolSys'):
+
+        # method in ['LinDelInt', 'physical']
+
+        if method=='LinDelInt':
+
+            coordinates_nodes = msm.get(self.molecular_system, element='atom', selection=self.atom_indices, coordinates=True)
+            mode_array = self.mode[mode]
+
+            interpolator = ldl.Interpolator(puw.get_value(coordinates_nodes[0]), mode_array)
+
+            components_involved = msm.get(self.molecular_system, element='component', selection=self.atom_indices, component_index=True)
+            atoms_involved = msm.get(self.molecular_system, element='atom', selection='component_index in @components_involved', atom_index=True)
+            atom_indices = msm.get(self.molecular_system, element='atom', selection=selection, mask=atoms_involved, syntax=syntax)
+
+            molecular_system = msm.extract(self.molecular_system, selection=atom_indices)
+            coordinates = msm.get(molecular_system, element='atom', selection='all', coordinates=True)
+            direction_mode = interpolator.do_your_thing(puw.get_value(coordinates[0]))
+
+
+
+            molecular_system = msm.remove(molecular_system, structure_indices=0)
+
+
 
             pass
+
         pass
 
