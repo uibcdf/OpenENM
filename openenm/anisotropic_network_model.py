@@ -110,7 +110,8 @@ class AnisotropicNetworkModel():
 
         if steps>0:
 
-            molecular_system = self.trajectory_along_mode(mode=mode, amplitude=amplitude, steps=steps, method=method)
+            molecular_system = self.trajectory_along_mode(mode=mode, amplitude=amplitude, steps=steps, method=method,
+                    form='molsysmt.MolSys')
             view = msm.view(molecular_system)
 
         else:
@@ -127,7 +128,7 @@ class AnisotropicNetworkModel():
 
 
     def trajectory_along_mode(self, selection='all', mode=1, amplitude='3.0 angstroms', steps=60, method='LinDelInt',
-            syntax='MolSysMT', output_form='molsysmt.MolSys'):
+            syntax='MolSysMT', form='molsysmt.MolSys'):
 
         # method in ['LinDelInt', 'physical']
 
@@ -145,14 +146,21 @@ class AnisotropicNetworkModel():
             molecular_system = msm.extract(self.molecular_system, selection=atom_indices)
             coordinates = msm.get(molecular_system, element='atom', selection='all', coordinates=True)
             direction_mode = interpolator.do_your_thing(puw.get_value(coordinates[0]))
-
-
+            direction_mode = direction_mode/np.linalg.norm(direction_mode)
+            max_norm_atom = -1.0
+            for ii in range(direction_mode.shape[0]):
+                norm_atom = np.linalg.norm(mode_array[ii,:])
+                if max_norm_atom<norm_atom:
+                    max_norm_atom=norm_atom
+            factor = puw.quantity(amplitude)/max_norm_atom
+            delta_f=2.0*np.pi/(steps*1.0)
+            new_coordinates = np.zeros(coordinates.shape, dtype=float)
+            for frame in range(steps):
+                new_coordinates[ii,:,:]=coordinates+factor*np.sin(delta_f*frame)*direction_mode
 
             molecular_system = msm.remove(molecular_system, structure_indices=0)
+            molecular_system = msm.append_structures(molecular_system, new_coordinates)
+            molecular_system = msm.convert(molecular_system, form=output_form)
 
-
-
-            pass
-
-        pass
+            return molecular_system
 
