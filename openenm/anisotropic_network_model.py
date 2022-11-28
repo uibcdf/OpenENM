@@ -90,8 +90,6 @@ class AnisotropicNetworkModel():
 
         # Frequencies and modes
 
-        self.frequencies = None
-
         self.modes = np.zeros(shape=(self.n_nodes*3, self.n_nodes, 3), dtype=float)
 
         for aa in range(self.n_nodes*3):
@@ -100,12 +98,15 @@ class AnisotropicNetworkModel():
                 for jj in range(3):
                     self.modes[aa,ii,jj]=self.eigenvectors[iii+jj,aa]
 
+        self.modes = self.modes[6:]
+        self.frequencies = self.eigenvalues[6:]
+
     def show_contact_map(self):
 
         plt.matshow(self.contacts, cmap='binary')
         return plt.show()
 
-    def view_mode(self, mode=6, amplitude='6.0 angstroms', oscillation_steps=60, method='LinDelInt', representation='cartoon', arrows=False,
+    def view_mode(self, mode=0, amplitude='6.0 angstroms', oscillation_steps=60, method='LinDelInt', representation='cartoon', arrows=False,
             color_arrows='#808080', radius_arrows='0.2 angstroms'):
 
         if oscillation_steps>0:
@@ -121,7 +122,7 @@ class AnisotropicNetworkModel():
         if arrows:
 
             coordinates = msm.get(self.molecular_system, element='atom', selection=self.atom_indices, coordinates=True)
-            arrows = puw.quantity(100.0*self.mode[mode], 'angstroms')
+            arrows = puw.quantity(100.0*self.modes[mode], 'angstroms')
             msm.thirds.nglview.add_arrows(view, coordinates, arrows, color=color_arrows, radius=radius_arrows)
 
         return view

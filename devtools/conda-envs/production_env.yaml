@@ -9,3 +9,5 @@ dependencies:
 - molsysmt
 - pyunitwizard
 - matplotlib
+- tqdm
+- scikit-learn

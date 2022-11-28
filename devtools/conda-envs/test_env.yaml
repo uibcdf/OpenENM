@@ -9,6 +9,8 @@ dependencies:
 - molsysmt
 - pyunitwizard
 - matplotlib
+- tqdm
+- scikit-learn
 - pytest
 - pip
 - pytest-cov
