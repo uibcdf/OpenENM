@@ -105,12 +105,12 @@ class AnisotropicNetworkModel():
         plt.matshow(self.contacts, cmap='binary')
         return plt.show()
 
-    def view_mode(self, mode=1, amplitude='3.0 angstroms', steps=60, method='LinDelInt', representation='cartoon', arrows=False,
+    def view_mode(self, mode=6, amplitude='6.0 angstroms', oscillation_steps=60, method='LinDelInt', representation='cartoon', arrows=False,
             color_arrows='#808080', radius_arrows='0.2 angstroms'):
 
-        if steps>0:
+        if oscillation_steps>0:
 
-            molecular_system = self.trajectory_along_mode(mode=mode, amplitude=amplitude, steps=steps, method=method,
+            molecular_system = self.trajectory_along_mode(mode=mode, amplitude=amplitude, oscillation_steps=oscillation_steps, method=method,
                     form='molsysmt.MolSys')
             view = msm.view(molecular_system)
 
@@ -127,21 +127,21 @@ class AnisotropicNetworkModel():
         return view
 
 
-    def trajectory_along_mode(self, selection='all', mode=1, amplitude='3.0 angstroms', steps=60, method='LinDelInt',
-            syntax='MolSysMT', form='molsysmt.MolSys'):
+    def trajectory_along_mode(self, selection='all', mode=0, amplitude='6.0 angstroms', oscillation_steps=60, method='LinDelInt',
+            syntax='MolSysMT', form='XYZ'):
 
         # method in ['LinDelInt', 'physical']
 
         if method=='LinDelInt':
 
             coordinates_nodes = msm.get(self.molecular_system, element='atom', selection=self.atom_indices, coordinates=True)
-            mode_array = self.mode[mode]
+            mode_array = self.modes[mode]
 
             interpolator = ldl.Interpolator(puw.get_value(coordinates_nodes[0]), mode_array)
 
             components_involved = msm.get(self.molecular_system, element='component', selection=self.atom_indices, component_index=True)
             atoms_involved = msm.get(self.molecular_system, element='atom', selection='component_index in @components_involved', atom_index=True)
-            atom_indices = msm.get(self.molecular_system, element='atom', selection=selection, mask=atoms_involved, syntax=syntax)
+            atom_indices = msm.select(self.molecular_system, element='atom', selection=selection, mask=atoms_involved, syntax=syntax)
 
             molecular_system = msm.extract(self.molecular_system, selection=atom_indices)
             coordinates = msm.get(molecular_system, element='atom', selection='all', coordinates=True)
@@ -149,18 +149,18 @@ class AnisotropicNetworkModel():
             direction_mode = direction_mode/np.linalg.norm(direction_mode)
             max_norm_atom = -1.0
             for ii in range(direction_mode.shape[0]):
-                norm_atom = np.linalg.norm(mode_array[ii,:])
+                norm_atom = np.linalg.norm(direction_mode[ii,:])
                 if max_norm_atom<norm_atom:
                     max_norm_atom=norm_atom
             factor = puw.quantity(amplitude)/max_norm_atom
-            delta_f=2.0*np.pi/(steps*1.0)
-            new_coordinates = np.zeros(coordinates.shape, dtype=float)
-            for frame in range(steps):
-                new_coordinates[ii,:,:]=coordinates+factor*np.sin(delta_f*frame)*direction_mode
+            delta_f=2.0*np.pi/(oscillation_steps*1.0)
+            new_coordinates = puw.quantity(np.zeros([oscillation_steps, coordinates.shape[1], coordinates.shape[2]], dtype=float), 'nm')
+            for frame in range(oscillation_steps):
+                new_coordinates[frame,:,:]=coordinates+factor*np.sin(delta_f*frame)*direction_mode
 
             molecular_system = msm.remove(molecular_system, structure_indices=0)
-            molecular_system = msm.append_structures(molecular_system, new_coordinates)
-            molecular_system = msm.convert(molecular_system, form=output_form)
+            msm.append_structures(molecular_system, new_coordinates)
+            molecular_system = msm.convert(molecular_system, form=form)
 
             return molecular_system
 
