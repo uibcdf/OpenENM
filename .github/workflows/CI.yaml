@@ -13,32 +13,48 @@ on:
     #   (from https://help.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events-schedule)
     - cron: "0 0 * * *"
 
+  workflow_dispatch:
+
 jobs:
   test:
-    name: Test on ${{ matrix.os }}, Python ${{ matrix.python-version }}
-    runs-on: ${{ matrix.os }}
+    name: Test on ${{ matrix.cfg.os }}, Python ${{ matrix.cfg.python-version }}
+    runs-on: ${{ matrix.cfg.os }}
     strategy:
+      fail-fast: false  # do not cancel all in-progress jobs if any job variation fails
       matrix:
-        os: [macOS-latest, ubuntu-latest, windows-latest]
-        python-version: [3.7, 3.8, 3.9]
+        #os: ["macOS-latest", "ubuntu-latest"] # windows-latest (https://github.com/openmm/openmm/issues/3618#issuecomment-1166019901)
+        #python-version: ["3.8", "3.9", "3.10"]
+        cfg:
+          - { os: ubuntu-latest, python-version: "3.7"}
+          - { os: ubuntu-latest, python-version: "3.8"}
+          - { os: ubuntu-latest, python-version: "3.9"}
+          - { os: ubuntu-latest, python-version: "3.10"}
+          - { os: macos-latest,  python-version: "3.7"}
+          - { os: macos-latest,  python-version: "3.8"}
+          - { os: macos-latest,  python-version: "3.9"}
+          - { os: macos-latest,  python-version: "3.10"}
+          - { os: windows-latest,  python-version: "3.7"}
+          - { os: windows-latest,  python-version: "3.8"}
+          - { os: windows-latest,  python-version: "3.9"}
+          - { os: windows-latest,  python-version: "3.10"}
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
 
     - name: Additional info about the build
       shell: bash
       run: |
         uname -a
-        df -h
-        ulimit -a
-
 
     # More info on options: https://github.com/conda-incubator/setup-miniconda
     - uses: conda-incubator/setup-miniconda@v2
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: ${{ matrix.cfg.python-version }}
         environment-file: devtools/conda-envs/test_env.yaml
-
+        mamba-version: "*"
+        use-mamba: true
         channels: conda-forge,defaults
 
         activate-environment: test
@@ -51,9 +67,8 @@ jobs:
       # conda setup requires this special shell
       shell: bash -l {0}
       run: |
-        python -m pip install . --no-deps
+        python setup.py develop
         conda list
-
 
     - name: Run tests
 
@@ -61,12 +76,12 @@ jobs:
       shell: bash -l {0}
 
       run: |
-        pytest -v --cov=opengnm --cov-report=xml --color=yes opengnm/tests/
+        pytest -v --cov=openenm --cov-report=xml --color=yes openenm/tests/
 
     - name: CodeCov
       uses: codecov/codecov-action@v1
       with:
         file: ./coverage.xml
         flags: unittests
-        name: codecov-${{ matrix.os }}-py${{ matrix.python-version }}
+        name: codecov-${{ matrix.cfg.os }}-py${{ matrix.cfg.python-version }}
 

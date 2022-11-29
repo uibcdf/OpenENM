@@ -10,7 +10,7 @@ describes how to merge code changes into this opengnm.
 * On your local machine,
   [clone](https://help.github.com/articles/cloning-a-repository/) your fork of
   the repository.
-* Check the Developers' Guide in [the OpenGNM documentation](https://uibcdf.org/OpenGNM).
+* Check the Developers' Guide in [the OpenENM documentation](https://uibcdf.org/OpenENM).
 
 ## Making Changes
 

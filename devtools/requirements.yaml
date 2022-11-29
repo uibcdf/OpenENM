@@ -49,6 +49,7 @@ development:
     - *test_dependencies
     - *docs_dependencies
     - jupyterlab
+    - pyyaml
 
 conda-build:
   channels:
@@ -56,4 +57,5 @@ conda-build:
   dependencies:
     - anaconda-client
     - conda-build
+    - boa
 
