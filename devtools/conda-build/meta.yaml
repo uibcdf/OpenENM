@@ -16,6 +16,9 @@ requirements:
   - numpy
   - molsysmt
   - pyunitwizard
+  - matplotlib
+  - tqdm
+  - scikit-learn
 about:
   home: https://uibcdf.org
   license: MIT License

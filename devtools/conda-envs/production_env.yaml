@@ -1,6 +1,5 @@
 channels:
 - uibcdf
-- uibcdf/label/dev
 - conda-forge
 - defaults
 dependencies:
@@ -9,3 +8,6 @@ dependencies:
 - numpy
 - molsysmt
 - pyunitwizard
+- matplotlib
+- tqdm
+- scikit-learn

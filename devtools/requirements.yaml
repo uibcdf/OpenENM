@@ -1,7 +1,6 @@
 setup:
   channels: &setup_channels
     - uibcdf
-    - uibcdf/label/dev
     - conda-forge
     - defaults
   dependencies: &setup_dependencies
@@ -16,6 +15,9 @@ production:
     - *setup_dependencies
     - molsysmt
     - pyunitwizard
+    - matplotlib
+    - tqdm
+    - scikit-learn
 
 test:
   channels: &test_channels
@@ -35,6 +37,8 @@ docs:
     - sphinx
     - sphinx_rtd_theme
     - sphinxcontrib-bibtex
+    - sphinx-remove-toctrees
+    - sphinx-copybutton
     - myst-nb
 
 development:

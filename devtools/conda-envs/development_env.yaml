@@ -1,6 +1,5 @@
 channels:
 - uibcdf
-- uibcdf/label/dev
 - conda-forge
 - defaults
 dependencies:
@@ -9,6 +8,9 @@ dependencies:
 - numpy
 - molsysmt
 - pyunitwizard
+- matplotlib
+- tqdm
+- scikit-learn
 - pytest
 - pip
 - pytest-cov
@@ -16,5 +18,7 @@ dependencies:
 - sphinx
 - sphinx_rtd_theme
 - sphinxcontrib-bibtex
+- sphinx-remove-toctrees
+- sphinx-copybutton
 - myst-nb
 - jupyterlab
