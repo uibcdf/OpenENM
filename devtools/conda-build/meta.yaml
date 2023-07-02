@@ -8,17 +8,20 @@ build:
 requirements:
   build:
   - python
-  - setuptools
-  - numpy
+  - pip
+  - setuptools >=61.0
+  - versioningit ~=2.0
   run:
   - python
-  - setuptools
-  - numpy
+  - pip
+  - setuptools >=61.0
+  - versioningit ~=2.0
   - molsysmt
   - pyunitwizard
   - matplotlib
   - tqdm
   - scikit-learn
+  - lindelint
 about:
   home: https://uibcdf.org
   license: MIT License

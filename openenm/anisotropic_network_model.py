@@ -140,8 +140,10 @@ class AnisotropicNetworkModel():
 
             interpolator = ldl.Interpolator(puw.get_value(coordinates_nodes[0]), mode_array)
 
-            components_involved = msm.get(self.molecular_system, element='component', selection=self.atom_indices, component_index=True)
-            atoms_involved = msm.get(self.molecular_system, element='atom', selection='component_index in @components_involved', atom_index=True)
+            components_involved = msm.get(self.molecular_system, element='component', selection='atom_index in @self.atom_indices',
+                                          component_index=True)
+            atoms_involved = msm.get(self.molecular_system, element='atom', selection='component_index in @components_involved',
+                                     atom_index=True)
             atom_indices = msm.select(self.molecular_system, element='atom', selection=selection, mask=atoms_involved, syntax=syntax)
 
             molecular_system = msm.extract(self.molecular_system, selection=atom_indices)
@@ -161,7 +163,7 @@ class AnisotropicNetworkModel():
 
             molecular_system = msm.remove(molecular_system, structure_indices=0)
             msm.append_structures(molecular_system, new_coordinates)
-            molecular_system = msm.convert(molecular_system, form=form)
+            molecular_system = msm.convert(molecular_system, to_form=form)
 
             return molecular_system
 

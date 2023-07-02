@@ -5,8 +5,9 @@ setup:
     - defaults
   dependencies: &setup_dependencies
     - python
-    - setuptools
-    - numpy
+    - pip
+    - setuptools >=61.0
+    - versioningit ~=2.0
 
 production:
   channels: &production_channels
@@ -18,6 +19,8 @@ production:
     - matplotlib
     - tqdm
     - scikit-learn
+    - lindelint
+    - lindelint
 
 test:
   channels: &test_channels
@@ -50,6 +53,7 @@ development:
     - *docs_dependencies
     - jupyterlab
     - pyyaml
+    - mamba
 
 conda-build:
   channels:
@@ -57,5 +61,4 @@ conda-build:
   dependencies:
     - anaconda-client
     - conda-build
-    - boa
 
