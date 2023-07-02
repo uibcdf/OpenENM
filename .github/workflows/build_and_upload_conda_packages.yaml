@@ -13,21 +13,24 @@ jobs:
     strategy:
       fail-fast: false  # do not cancel all in-progress jobs if any job variation fails
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"] # 3.10 with errors
+        python-version: ["3.8", "3.9", "3.10"] # 3.10 with errors
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Conda environment creation and activation
-        uses: conda-incubator/setup-miniconda@v2
+      - name: Setup conda env
+        uses: mamba-org/provision-with-micromamba@main
         with:
-          python-version: ${{ matrix.python-version }}
           environment-file: devtools/conda-envs/build_env.yaml
-          mamba-version: "*"
-          use-mamba: true
-          auto-update-conda: false
-          auto-activate-base: false
-          show-channel-urls: true
+          environment-name: build
+          channels: uibcdf, conda-forge, defaults
+          extra-specs: |
+            python==${{ matrix.python-version }}
+      - name: Info conda
+        shell: bash -l {0}
+        run: |
+          micromamba info
+          micromamba list
       - name: Build and upload the conda packages
         uses: uibcdf/action-build-and-upload-conda-packages@v1.2.0
         with:
