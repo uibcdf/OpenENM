@@ -27,6 +27,7 @@ dependencies = [
     "tqdm",
     "scikit-learn",
     "lindelint",
+    "molsysmt",
 ]
 
 # Update the urls once the hosting is set up.

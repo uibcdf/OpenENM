@@ -20,7 +20,6 @@ production:
     - tqdm
     - scikit-learn
     - lindelint
-    - lindelint
 
 test:
   channels: &test_channels
