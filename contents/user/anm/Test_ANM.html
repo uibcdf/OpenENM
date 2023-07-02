@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test &mdash; OpenENM 0.1.0+0.g4cc82c4.dirty documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Test 1" href="../../cookbook/Test1.html" />
+    <link rel="prev" title="Anisotropic Network Model" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            OpenENM
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about/what.html">What’s OpenENM?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/showcase/index.html">Showcase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../about/showcase/Quickstart_guide.html">Quickstart guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/citation.html">Citation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/ENM.html">Elastic Network Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../gnm/index.html">Gaussian Network Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../gnm/Test_GNM.html">Test GNM</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Anisotropic Network Model</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Test</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Cookbook</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cookbook/Test1.html">Test 1</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/intro/index.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../developer/intro/Introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer/intro/Introduction.html#intro">Intro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer/intro/fork.html">Fork MolSysMT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/documentation/index.html">Writing documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../developer/documentation/web/index.html">Web</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../developer/documentation/web/myst.html">MyST</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../developer/documentation/api/index.html">API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../developer/documentation/api/todo.html">TODO</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/users/api_users.html">Users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/developers/api_developers.html">Developers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/developers/exceptions/api_exceptions.html">Exceptions</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">OpenENM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Anisotropic Network Model</a></li>
+      <li class="breadcrumb-item active">Test</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="test">
+<h1>Test<a class="headerlink" href="#test" title="Permalink to this heading"></a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">molsysmt</span> <span class="k">as</span> <span class="nn">msm</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "35613c0ba40f47b0bd466cc930e02232"}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openenm</span> <span class="k">as</span> <span class="nn">oenm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">molecular_system</span> <span class="o">=</span> <span class="n">msm</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;1TCD&#39;</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="s1">&#39;molecule_type==&quot;protein&quot;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">msm</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">molecular_system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+</style>
+<table id="T_fee12">
+  <thead>
+    <tr>
+      <th id="T_fee12_level0_col0" class="col_heading level0 col0" >form</th>
+      <th id="T_fee12_level0_col1" class="col_heading level0 col1" >n_atoms</th>
+      <th id="T_fee12_level0_col2" class="col_heading level0 col2" >n_groups</th>
+      <th id="T_fee12_level0_col3" class="col_heading level0 col3" >n_components</th>
+      <th id="T_fee12_level0_col4" class="col_heading level0 col4" >n_chains</th>
+      <th id="T_fee12_level0_col5" class="col_heading level0 col5" >n_molecules</th>
+      <th id="T_fee12_level0_col6" class="col_heading level0 col6" >n_entities</th>
+      <th id="T_fee12_level0_col7" class="col_heading level0 col7" >n_proteins</th>
+      <th id="T_fee12_level0_col8" class="col_heading level0 col8" >n_structures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td id="T_fee12_row0_col0" class="data row0 col0" >molsysmt.MolSys</td>
+      <td id="T_fee12_row0_col1" class="data row0 col1" >3818</td>
+      <td id="T_fee12_row0_col2" class="data row0 col2" >497</td>
+      <td id="T_fee12_row0_col3" class="data row0 col3" >2</td>
+      <td id="T_fee12_row0_col4" class="data row0 col4" >2</td>
+      <td id="T_fee12_row0_col5" class="data row0 col5" >2</td>
+      <td id="T_fee12_row0_col6" class="data row0 col6" >1</td>
+      <td id="T_fee12_row0_col7" class="data row0 col7" >2</td>
+      <td id="T_fee12_row0_col8" class="data row0 col8" >1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anm</span> <span class="o">=</span> <span class="n">oenm</span><span class="o">.</span><span class="n">AnisotropicNetworkModel</span><span class="p">(</span><span class="n">molecular_system</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="s1">&#39;atom_name==&quot;CA&quot;&#39;</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="s1">&#39;10 angstroms&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">view</span> <span class="o">=</span> <span class="n">anm</span><span class="o">.</span><span class="n">view_mode</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">arrows</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">view</span> <span class="o">=</span> <span class="n">anm</span><span class="o">.</span><span class="n">view_mode</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">view</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "a386328395ae4bdcbc127c39cb9ebace"}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">view</span><span class="o">.</span><span class="n">add_surface</span><span class="p">(</span><span class="n">opacity</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">molecular_system</span> <span class="o">=</span> <span class="n">msm</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;4PFK&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">view</span> <span class="o">=</span> <span class="n">msm</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">molecular_system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">view</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "c697f1974a294fcca7694edfb8a830d0"}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">view</span><span class="o">.</span><span class="n">add_spacefill</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">molecular_system</span><span class="o">=</span> <span class="n">msm</span><span class="o">.</span><span class="n">build</span><span class="o">.</span><span class="n">make_bioassembly</span><span class="p">(</span><span class="n">molecular_system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">14</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">molecular_system</span><span class="o">=</span> <span class="n">msm</span><span class="o">.</span><span class="n">build</span><span class="o">.</span><span class="n">make_bioassembly</span><span class="p">(</span><span class="n">molecular_system</span><span class="p">)</span>
+
+<span class="nn">File ~/micromamba-root/envs/docs/lib/python3.10/site-packages/molsysmt/_private/digestion/digest.py:117,</span> in <span class="ni">digest.&lt;locals&gt;.digestor.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">115</span>     <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">all_args</span><span class="p">[</span><span class="s1">&#39;self&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">final_args</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">116</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">117</span>     <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">final_args</span><span class="p">)</span>
+
+<span class="ne">TypeError</span>: make_bioassembly() missing 1 required positional argument: &#39;bioassembly&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">view</span> <span class="o">=</span> <span class="n">msm</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">molecular_system</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">anm</span> <span class="o">=</span> <span class="n">oenm</span><span class="o">.</span><span class="n">AnisotropicNetworkModel</span><span class="p">(</span><span class="n">molecular_system</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="s1">&#39;atom_name==&quot;CA&quot;&#39;</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="s1">&#39;10 angstroms&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">view</span> <span class="o">=</span> <span class="n">anm</span><span class="o">.</span><span class="n">view_mode</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">view</span><span class="o">.</span><span class="n">add_surface</span><span class="p">(</span><span class="n">opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">view</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+    <a href="https://github.com/uibcdf/openenm">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Anisotropic Network Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../cookbook/Test1.html" class="btn btn-neutral float-right" title="Test 1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, UIBCDF Lab at the Mexico City Childrens Hospital Federico Gomez and authors.Computational Molecular Science Python Cookiecutter version 1.5.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>
