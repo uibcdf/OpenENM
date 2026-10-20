@@ -25,6 +25,14 @@ and run `python devtools/devguide_index.py --check` plus
 `python -m unittest discover -s tests -p test_reporting_protocol.py` before
 committing. The pending queues and permanent archive have generated indexes.
 
+## Public release titles
+
+When preparing, publishing or intentionally editing a public GitHub Release, use
+exactly `X.Y.Z` as its title/name, matching the canonical tag and package/project
+version. Put descriptions in the body/notes. Read
+[the local release-title guide](devguide/release_titles.md) and
+[the canonical rule](MOLSYSSUITE_GUIDE.md#github-release-titles).
+
 ## Modular reusable tools
 
 Before adding a feature, inspect existing tools and identify the owning module or
