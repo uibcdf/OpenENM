@@ -25,6 +25,14 @@ and run `python devtools/devguide_index.py --check` plus
 `python -m unittest discover -s tests -p test_reporting_protocol.py` before
 committing. The pending queues and permanent archive have generated indexes.
 
+## Release and package-publication notices
+
+For every new component release, with or without a published package, and every
+new package version/build/distribution route, open or update a release-specific
+issue in `uibcdf/molsyssuite` as part of closeout. Include exact version/tag/source,
+actual package availability and verification evidence, and ecosystem follow-up.
+Follow [the notice policy](MOLSYSSUITE_GUIDE.md#release-and-package-publication-notices).
+
 ## Public release titles
 
 When preparing, publishing or intentionally editing a public GitHub Release, use
